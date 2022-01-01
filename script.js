@@ -1,6 +1,6 @@
-// create a div with and h1 and put an input inside of it
+// create a div and assign the div to a variable. Put an empty h1 and an input with a placeholder saying "Enter a Hex Color Code" inside of div 
 var div = document.createElement('div');
-div.innerHTML = '<h1></h1><input type="text" placeholder="Type in a hex color code"/>';
+div.innerHTML = '<h1></h1><input type="text" placeholder="Enter a Hex Color Code"/>';
 document.body.appendChild(div);
 
 // center the div
@@ -9,21 +9,40 @@ div.style.left = '50%';
 div.style.top = '50%';
 div.style.transform = 'translate(-50%, -50%)';
 
-// center align the h1 text
+// get he h1 text input. center align the h1 text. do not show the h1 text
 var h1 = div.querySelector('h1');
 h1.style.textAlign = 'center';
+h1.style.display = 'none';
 
-//remove input border
+// get the input
 var input = div.querySelector('input');
+//remove input border and remove the outline
 input.style.border = 'none';
 input.style.outline = 'none';
+// center the input text
 input.style.textAlign = 'center';
-input.style.fontSize = '40px';
+// make font family apple default font and source sans pro the fallback font for the input text
+input.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Source Sans Pro", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+// if screen width less is than 450px input font size is 22px but if it is greater than 450px input font size is 38px
+if (window.innerWidth < 450) {
+    input.style.fontSize = '22px';
+} else {
+    input.style.fontSize = '38px';
+}
+// add media query to change the input font size. if screen width less is than 450px input font size is 22px but if it is greater than 450px input font size is 38px
+var mq = window.matchMedia("(max-width: 450px)");
+mq.addListener(function (changed) {
+    if (changed.matches) {
+        input.style.fontSize = '22px';
+    } else {
+        input.style.fontSize = '38px';
+    }
+});
+// make input background color transparent
 input.style.backgroundColor = 'transparent';
 
 // add an input event listener to the input
 div.querySelector('input').addEventListener('input', function (e) {
-
     // store the input value in a variable
     var color = e.target.value;
     // check if the input value is a color
@@ -64,3 +83,4 @@ function hexToRgb(hex) {
 document.body.addEventListener('click', function () {
     copyToClipboard(document.body.style.backgroundColor);
 });
+
